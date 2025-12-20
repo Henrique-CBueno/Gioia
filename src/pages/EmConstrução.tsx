@@ -1,16 +1,20 @@
 import { Link } from "react-router-dom";
 
-export default function NotFound() {
+export default function EmConstrucao() {
 	return (
-		<main className="min-h-[60vh] flex items-center justify-center">
-			<div className="container mx-auto px-4 py-16">
-				<div className="max-w-2xl mx-auto text-center">
-					<div className="text-[86px] leading-none">😕</div>
+		<main className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+			<div className="container mx-auto px-4 py-24">
+				<div className="max-w-xl mx-auto text-center">
+					<div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-primary/10 text-primary text-4xl mx-auto">
+						🚧
+					</div>
+
 					<h1 className="mt-6 text-3xl font-extrabold text-gray-900 dark:text-white">
-						Página não encontrada
+						Página em construção
 					</h1>
-					<p className="mt-3 text-gray-600 dark:text-gray-300">
-						A página que você procura não existe ou foi movida.
+					<p className="mt-4 text-gray-600 dark:text-gray-300">
+						Estamos trabalhando para trazer essa página em breve. Obrigado pela
+						paciência — se precisar, entre em contato conosco.
 					</p>
 
 					<div className="mt-8 flex items-center justify-center gap-3">
@@ -28,10 +32,6 @@ export default function NotFound() {
 							Entrar em Contato
 						</Link>
 					</div>
-
-					<p className="mt-6 text-sm text-gray-500">
-						Se acredita que isso é um erro, entre em contato conosco.
-					</p>
 				</div>
 			</div>
 		</main>

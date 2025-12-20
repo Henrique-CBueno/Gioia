@@ -1,36 +1,31 @@
-import { NavLink, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import About from "./pages/About";
+import { Routes, Route } from "react-router-dom";
+import InitialPage from "./pages/InitialPage";
 import NotFound from "./pages/NotFound";
+import Header from "./pages/components/header/Header";
+import Footer from "./pages/components/footer/Footer";
+import Contato from "./pages/components/contato/Contato";
+import PoliticaPrivacidade from "./pages/Politicas/PoliticaPrivacidade";
+import TermosDeUso from "./pages/Politicas/TermosDeUso";
+import EmConstrucao from "./pages/EmConstrução";
 
 function App() {
 	return (
-		<div style={{ maxWidth: 960, margin: "0 auto", padding: "2rem" }}>
-			<header
-				style={{
-					display: "flex",
-					gap: "1rem",
-					alignItems: "center",
-					marginBottom: "1.5rem",
-				}}
-			>
-				<h1 style={{ margin: 0, fontSize: "1.25rem" }} className="bg-red-800">
-					Gioia
-				</h1>
-				<nav style={{ display: "flex", gap: "0.75rem" }}>
-					<NavLink to="/" end>
-						Home
-					</NavLink>
-					<NavLink to="/about">About</NavLink>
-				</nav>
-			</header>
-			<main>
+		<div className="bg-[#f6f6f8] min-h-screen">
+			<Header />
+			<main className="mx-auto">
 				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path="/about" element={<About />} />
+					<Route path="/" element={<InitialPage />} />
+					<Route path="/contato" element={<Contato />} />
+					<Route
+						path="/politica-de-privacidade"
+						element={<PoliticaPrivacidade />}
+					/>
+					<Route path="/termos-de-uso" element={<TermosDeUso />} />
+					<Route path="/login" element={<EmConstrucao />} />
 					<Route path="*" element={<NotFound />} />
 				</Routes>
 			</main>
+			<Footer />
 		</div>
 	);
 }

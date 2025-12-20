@@ -1,0 +1,15 @@
+.nav-link {
+	position: relative;
+}
+
+.nav-underline {
+	will-change: width;
+	left: 0;
+	bottom: 0;
+	transition: width 0.5s cubic-bezier(.2,.9,.2,1);
+	width: 0;
+}
+
+.nav-link:hover .nav-underline {
+	width: 100% !important;
+}
