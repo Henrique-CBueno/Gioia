@@ -38,11 +38,11 @@ const Header: React.FC = () => {
 
 	return (
 		<header className="sticky top-0 z-50 bg-white opacity-95 border-b border-solid border-gray-200 px-15 py-4">
-			<div className="max-w-370 mx-auto grid grid-cols-3">
+			<div className="max-w-370 mx-auto grid grid-cols-2 lg:grid-cols-3">
 				<div className="flex justify-start items-center">
 					<img src="/LOGO_GIOIA.png" alt="Gioia Logo" className="h-15" />
 				</div>
-				<div className="flex justify-center items-center gap-4">
+				<div className="hidden justify-center items-center gap-4 lg:flex">
 					{NAV_LINKS.map((link) => {
 						return (
 							<Link
