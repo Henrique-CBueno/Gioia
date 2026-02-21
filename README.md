@@ -9,6 +9,8 @@ npm install
 npm run dev
 ```
 
+FRONTEND
+
 Open the app, then navigate using the header links. Routes included:
 
 - Home: `/`
