@@ -6,27 +6,37 @@ import Footer from "./pages/components/footer/Footer";
 import Contato from "./pages/components/contato/Contato";
 import PoliticaPrivacidade from "./pages/Politicas/PoliticaPrivacidade";
 import TermosDeUso from "./pages/Politicas/TermosDeUso";
-import EmConstrucao from "./pages/EmConstrução";
+import Login from "./pages/Login";
 
 function App() {
 	return (
-		<div className="bg-[#f6f6f8] min-h-screen">
-			<Header />
-			<main className="mx-auto">
-				<Routes>
-					<Route path="/" element={<InitialPage />} />
-					<Route path="/contato" element={<Contato />} />
-					<Route
-						path="/politica-de-privacidade"
-						element={<PoliticaPrivacidade />}
-					/>
-					<Route path="/termos-de-uso" element={<TermosDeUso />} />
-					<Route path="/login" element={<EmConstrucao />} />
-					<Route path="*" element={<NotFound />} />
-				</Routes>
-			</main>
-			<Footer />
-		</div>
+		<Routes>
+			{/* Rota de login: sem Header e Footer */}
+			<Route path="/login" element={<Login />} />
+
+			{/* Demais rotas: com Header e Footer */}
+			<Route
+				path="*"
+				element={
+					<div className="bg-[#f6f6f8] min-h-screen">
+						<Header />
+						<main className="mx-auto">
+							<Routes>
+								<Route path="/" element={<InitialPage />} />
+								<Route path="/contato" element={<Contato />} />
+								<Route
+									path="/politica-de-privacidade"
+									element={<PoliticaPrivacidade />}
+								/>
+								<Route path="/termos-de-uso" element={<TermosDeUso />} />
+								<Route path="*" element={<NotFound />} />
+							</Routes>
+						</main>
+						<Footer />
+					</div>
+				}
+			/>
+		</Routes>
 	);
 }
 
