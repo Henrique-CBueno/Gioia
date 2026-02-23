@@ -1,16 +1,92 @@
 import { Eye, EyeOff } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { login } from "../services/authService";
+import { useAuth } from "../contexts/AuthContext";
+
+// ─── Schema de validação ─────────────────────────────────────────────────────
+
+const schema = z.object({
+	email: z
+		.string()
+		.min(1, "E-mail é obrigatório")
+		.email("Digite um e-mail válido"),
+	password: z.string().min(1, "Senha é obrigatória"),
+});
+
+type FormData = z.infer<typeof schema>;
+
+// ─── Constantes de rate limit ─────────────────────────────────────────────────
+
+const MAX_ATTEMPTS = 5;
+const LOCK_SECONDS = 30;
+
+// ─── Componente ───────────────────────────────────────────────────────────────
 
 export default function Login() {
 	const [showPassword, setShowPassword] = useState(false);
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
+	const [serverError, setServerError] = useState<string | null>(null);
+	const [countdown, setCountdown] = useState(0);
+	const failedAttempts = useRef(0);
+	const navigate = useNavigate();
+	const { signIn } = useAuth();
 
-	const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault();
-		// TODO: implementar lógica de autenticação
-		console.log("Login:", { email, password });
+	const {
+		register,
+		handleSubmit,
+		formState: { errors, isSubmitting },
+	} = useForm<FormData>({ resolver: zodResolver(schema) });
+
+	// Countdown timer quando bloqueado
+	useEffect(() => {
+		if (countdown <= 0) return;
+		const timer = setInterval(() => {
+			setCountdown((prev) => {
+				if (prev <= 1) {
+					clearInterval(timer);
+					return 0;
+				}
+				return prev - 1;
+			});
+		}, 1000);
+		return () => clearInterval(timer);
+	}, [countdown]);
+
+	const isLocked = countdown > 0;
+
+	const onSubmit = async (data: FormData) => {
+		if (isLocked) return;
+
+		setServerError(null);
+
+		try {
+			const response = await login(data);
+			signIn(response.access_token, response.refresh_token);
+			failedAttempts.current = 0;
+			if (response.mustChangePassword) {
+				navigate("/trocar-senha?obrigatorio=true");
+			} else {
+				navigate("/dashboard");
+			}
+		} catch (err) {
+			failedAttempts.current += 1;
+
+			if (failedAttempts.current >= MAX_ATTEMPTS) {
+				failedAttempts.current = 0;
+				setCountdown(LOCK_SECONDS);
+				setServerError(
+					`Muitas tentativas falhas. Aguarde ${LOCK_SECONDS} segundos.`,
+				);
+			} else {
+				const remaining = MAX_ATTEMPTS - failedAttempts.current;
+				setServerError(
+					`${err instanceof Error ? err.message : "Erro ao fazer login"}. ${remaining} tentativa${remaining > 1 ? "s" : ""} restante${remaining > 1 ? "s" : ""}.`,
+				);
+			}
+		}
 	};
 
 	return (
@@ -58,91 +134,109 @@ export default function Login() {
 							</p>
 						</div>
 
-						<form className="flex flex-col gap-6" onSubmit={handleSubmit}>
+						<form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
 							{/* Campo E-mail */}
-							<label className="flex flex-col flex-1">
-								<p className="text-[#333333] text-base font-medium leading-normal pb-2">
-									E-mail ou Usuário
-								</p>
+							<div className="flex flex-col flex-1 gap-1">
+								<label className="text-[#333333] text-base font-medium leading-normal">
+									E-mail
+								</label>
 								<input
 									type="email"
-									placeholder="Digite seu e-mail ou nome de usuário"
-									value={email}
-									onChange={(e) => setEmail(e.target.value)}
-									className="
+									placeholder="Digite seu e-mail"
+									{...register("email")}
+									aria-invalid={!!errors.email}
+									className={`
 										flex w-full min-w-0 flex-1 rounded-lg
 										text-[#333333] bg-[#F4F7F9]
-										border border-gray-300 h-14 p-4
+										border h-14 p-4
 										text-base font-normal
 										placeholder:text-gray-400
-										focus:outline-none focus:border-[#A8D0E6] focus:ring-2 focus:ring-[#A8D0E6]/50
+										focus:outline-none focus:ring-2 focus:ring-[#A8D0E6]/50
 										transition-colors
-									"
+										${errors.email ? "border-red-400 focus:border-red-400" : "border-gray-300 focus:border-[#A8D0E6]"}
+									`}
 								/>
-							</label>
+								{errors.email && (
+									<p className="text-red-500 text-sm mt-0.5">{errors.email.message}</p>
+								)}
+							</div>
 
 							{/* Campo Senha */}
-							<div className="flex flex-col">
-								<label className="flex flex-col flex-1">
-									<p className="text-[#333333] text-base font-medium leading-normal pb-2">
-										Senha
-									</p>
-									<div className="flex w-full flex-1 items-stretch rounded-lg">
-										<input
-											type={showPassword ? "text" : "password"}
-											placeholder="Digite sua senha"
-											value={password}
-											onChange={(e) => setPassword(e.target.value)}
-											className="
-												flex w-full min-w-0 flex-1 rounded-l-lg
-												text-[#333333] bg-[#F4F7F9]
-												border border-gray-300 border-r-0 h-14 p-4 pr-2
-												text-base font-normal
-												placeholder:text-gray-400
-												focus:outline-none focus:border-[#A8D0E6] focus:ring-2 focus:ring-[#A8D0E6]/50
-												transition-colors
-											"
-										/>
-										<button
-											type="button"
-											onClick={() => setShowPassword((prev) => !prev)}
-											className="
-												text-gray-500 flex border border-gray-300 bg-[#F4F7F9]
-												items-center justify-center px-4 rounded-r-lg border-l-0
-												hover:text-[#005A9C] focus:outline-none focus:border-[#A8D0E6]
-												focus:ring-2 focus:ring-[#A8D0E6]/50 transition-colors
-											"
-											aria-label={
-												showPassword ? "Ocultar senha" : "Mostrar senha"
-											}
-										>
-											{showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-										</button>
-									</div>
+							<div className="flex flex-col gap-1">
+								<label className="text-[#333333] text-base font-medium leading-normal">
+									Senha
 								</label>
-								<a
-									href="#"
-									className="text-[#005A9C] hover:underline text-sm font-normal leading-normal pt-2 px-1 self-end"
+								<div className="flex w-full flex-1 items-stretch rounded-lg">
+									<input
+										type={showPassword ? "text" : "password"}
+										placeholder="Digite sua senha"
+										{...register("password")}
+										aria-invalid={!!errors.password}
+										className={`
+											flex w-full min-w-0 flex-1 rounded-l-lg
+											text-[#333333] bg-[#F4F7F9]
+											border border-r-0 h-14 p-4 pr-2
+											text-base font-normal
+											placeholder:text-gray-400
+											focus:outline-none focus:ring-2 focus:ring-[#A8D0E6]/50
+											transition-colors
+											${errors.password ? "border-red-400 focus:border-red-400" : "border-gray-300 focus:border-[#A8D0E6]"}
+										`}
+									/>
+									<button
+										type="button"
+										onClick={() => setShowPassword((prev) => !prev)}
+										className={`
+											text-gray-500 flex border bg-[#F4F7F9]
+											items-center justify-center px-4 rounded-r-lg border-l-0
+											hover:text-[#005A9C] focus:outline-none focus:border-[#A8D0E6]
+											focus:ring-2 focus:ring-[#A8D0E6]/50 transition-colors
+											${errors.password ? "border-red-400" : "border-gray-300"}
+										`}
+										aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+									>
+										{showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+									</button>
+								</div>
+								{errors.password && (
+									<p className="text-red-500 text-sm mt-0.5">{errors.password.message}</p>
+								)}
+								<Link
+									to="/esqueci-senha"
+									className="text-[#005A9C] hover:underline text-sm font-normal leading-normal pt-1 self-end"
 								>
 									Esqueceu a senha?
-								</a>
+								</Link>
 							</div>
 
 							{/* Botões */}
-							<div className="flex flex-col gap-4 mt-4">
+							<div className="flex flex-col gap-4">
+								{/* Banner de erro do servidor ou bloqueio */}
+								{serverError && (
+									<p className={`text-sm text-center rounded-lg px-4 py-3 border ${isLocked ? "text-orange-700 bg-orange-50 border-orange-200" : "text-red-600 bg-red-50 border-red-200"}`}>
+										{isLocked ? `🔒 ${serverError} (${countdown}s)` : serverError}
+									</p>
+								)}
+
 								<button
 									type="submit"
+									disabled={isSubmitting || isLocked}
 									className="
 										flex items-center justify-center w-full
 										bg-[#005A9C] text-white font-bold h-14 rounded-lg
 										text-base leading-normal
 										hover:bg-[#004a84] focus:outline-none focus:ring-2
 										focus:ring-offset-2 focus:ring-[#005A9C]
-										transition-colors
+										transition-colors disabled:opacity-60 disabled:cursor-not-allowed
 									"
 								>
-									Entrar
+									{isLocked
+										? `Aguarde ${countdown}s`
+										: isSubmitting
+											? "Entrando..."
+											: "Entrar"}
 								</button>
+
 								<Link
 									to="/solicitar-acesso"
 									className="
