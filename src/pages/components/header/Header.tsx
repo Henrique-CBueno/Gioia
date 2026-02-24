@@ -37,12 +37,12 @@ const Header: React.FC = () => {
 	};
 
 	return (
-		<header className="sticky top-0 z-50 bg-white opacity-95 border-b border-solid border-gray-200 px-15 py-4">
-			<div className="max-w-370 mx-auto grid grid-cols-2 lg:grid-cols-3">
+		<header className="sticky top-0 z-50 bg-white opacity-95 border-b border-solid border-gray-200 px-4 lg:px-15 py-4">
+			<div className="max-w-370 mx-auto flex justify-between items-center">
 				<div className="flex justify-start items-center">
-					<img src="/LOGO_GIOIA.png" alt="Gioia Logo" className="h-15" />
+					<img src="/LOGO_GIOIA.png" alt="Gioia Logo" className="h-12 sm:h-15" />
 				</div>
-				<div className="hidden justify-center items-center gap-4 lg:flex">
+				<div className="hidden justify-center items-center gap-4 lg:flex absolute left-1/2 -translate-x-1/2">
 					{NAV_LINKS.map((link) => {
 						return (
 							<Link
@@ -59,9 +59,11 @@ const Header: React.FC = () => {
 						);
 					})}
 				</div>
-				<div className="flex items-center justify-end gap-2">
+				<div className="flex items-center justify-end gap-3 sm:gap-4">
 					<Link to="/contato">
-						<Button>Agende uma Consulta</Button>
+						<Button className="text-xs sm:text-sm h-9 sm:h-10 px-3 sm:px-4">
+							<span className="">Agende uma Consulta</span>
+						</Button>
 					</Link>
 					<Link
 						className="flex items-center gap-1 text-sm font-medium text-gioia-dark-gray hover:text-primary dark:text-gray-300 dark:hover:text-primary"
@@ -70,7 +72,7 @@ const Header: React.FC = () => {
 						<span className="material-symbols-outlined text-xl">
 							account_circle
 						</span>
-						<span>Login</span>
+						<span className="hidden sm:inline">Login</span>
 					</Link>
 				</div>
 			</div>
