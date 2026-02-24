@@ -8,6 +8,7 @@ import DashboardLayout from "./pages/dashboard/DashboardLayout";
 import RelatoriosPage from "./pages/dashboard/RelatoriosPage";
 import UploadRelatorioPage from "./pages/dashboard/UploadRelatorioPage";
 import UsuariosPage from "./pages/dashboard/UsuariosPage";
+import ContatosPage from "./pages/dashboard/ContatosPage";
 import InitialPage from "./pages/InitialPage";
 import NotFound from "./pages/NotFound";
 import Header from "./pages/components/header/Header";
@@ -32,6 +33,7 @@ function App() {
 						<Route path="relatorios" element={<RelatoriosPage />} />
 						<Route path="usuarios" element={<UsuariosPage />} />
 						<Route path="upload" element={<UploadRelatorioPage />} />
+						<Route path="contatos" element={<ContatosPage />} />
 					</Route>
 				</Route>
 

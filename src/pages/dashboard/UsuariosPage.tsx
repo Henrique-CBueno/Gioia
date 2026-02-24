@@ -274,7 +274,8 @@ export default function UsuariosPage() {
 
 				{!carregando && !erroLista && (
 					<div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-						<table className="w-full text-sm">
+						<div className="overflow-x-auto">
+							<table className="w-full text-sm">
 							<thead>
 								<tr className="border-b border-gray-100 bg-[#F4F7F9]">
 									<th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Nome</th>
@@ -320,7 +321,8 @@ export default function UsuariosPage() {
 									</tr>
 								))}
 							</tbody>
-						</table>
+							</table>
+						</div>
 					</div>
 				)}
 			</div>

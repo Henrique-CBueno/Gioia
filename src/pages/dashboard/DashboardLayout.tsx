@@ -1,4 +1,4 @@
-import { FileText, Upload, LogOut, Menu, X, Users } from "lucide-react";
+import { FileText, Upload, LogOut, Menu, X, Users, MessageSquare } from "lucide-react";
 import { useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
@@ -54,6 +54,7 @@ export default function DashboardLayout() {
 			? [
 					{ to: "/dashboard/usuarios", icon: Users, label: "Usuários" },
 					{ to: "/dashboard/upload", icon: Upload, label: "Upload" },
+					{ to: "/dashboard/contatos", icon: MessageSquare, label: "Contatos" },
 			  ]
 			: []),
 	];

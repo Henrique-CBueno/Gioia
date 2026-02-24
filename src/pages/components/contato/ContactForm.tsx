@@ -1,25 +1,42 @@
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { contactSchema } from "./zodSchema";
 import type { ContactFormData } from "./zodSchema";
 import { Link } from "react-router-dom";
+import { criarContato } from "../../../services/contatoService";
 
 type ContactFormProps = {
 	defaultEmail?: string;
 };
 
 export default function ContactForm({ defaultEmail }: ContactFormProps) {
+	const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
 	const {
 		register,
 		handleSubmit,
 		formState: { errors, isSubmitting },
+		reset,
 	} = useForm<ContactFormData>({
 		resolver: zodResolver(contactSchema),
 		defaultValues: { email: defaultEmail ?? "" },
 	});
 
-	function onSubmit(data: ContactFormData) {
-		console.log(data);
+	async function onSubmit(data: ContactFormData) {
+		setStatus("idle");
+		try {
+			await criarContato({
+				nome: data.name,
+				email: data.email,
+				telefone: data.phone,
+				assunto: data.subject,
+				mensagem: data.message,
+			});
+			setStatus("success");
+			reset();
+		} catch (error) {
+			setStatus("error");
+		}
 	}
 
 	return (
@@ -135,6 +152,17 @@ export default function ContactForm({ defaultEmail }: ContactFormProps) {
 			</div>
 			{errors.consent && (
 				<p className="text-xs text-red-500">{errors.consent.message}</p>
+			)}
+
+			{status === "success" && (
+				<div className="p-4 rounded-lg bg-green-50 border border-green-200 text-green-700 text-sm">
+					Sua mensagem foi enviada com sucesso. Entraremos em contato em breve!
+				</div>
+			)}
+			{status === "error" && (
+				<div className="p-4 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+					Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente mais tarde.
+				</div>
 			)}
 
 			{/* Botão */}
