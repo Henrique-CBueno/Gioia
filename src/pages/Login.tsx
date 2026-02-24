@@ -238,7 +238,7 @@ export default function Login() {
 								</button>
 
 								<Link
-									to="/solicitar-acesso"
+									to="/contato"
 									className="
 										flex items-center justify-center w-full
 										bg-[#005A9C]/20 text-[#005A9C] font-bold h-14 rounded-lg
