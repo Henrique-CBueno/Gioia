@@ -29,9 +29,7 @@ function HeroSection() {
 							<span className="text-primary">Decisões Estratégicas</span>
 						</h1>
 						<p className="text-lg text-text-sub-light dark:text-text-sub-dark leading-relaxed max-w-lg">
-							Análises fundamentadas por uma equipe de economistas seniores para
-							proteger e rentabilizar seu patrimônio com previsibilidade e
-							segurança.
+							Análises fundamentadas por economistas experientes para colaborar na proteção e na rentabilidade de seu patrimônio com previsibilidade e segurança.
 						</p>
 						<div className="flex flex-wrap gap-4 pt-4">
 							<button className="h-12 px-8 rounded-lg bg-primary text-white text-base font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 flex items-center gap-2">
@@ -102,8 +100,7 @@ function ReportsSection() {
 						Nossos Relatórios e Análises
 					</h2>
 					<p className="text-text-sub-light dark:text-text-sub-dark">
-						Acesse insights exclusivos segmentados por área de interesse para
-						antecipar movimentos de mercado.
+						Acesse insights exclusivos segmentados por área de interesse para subsidiar suas decisões de investimentos, dentro dos mais variados movimentos de mercado.
 					</p>
 				</div>
 				<div className="grid lg:grid-cols-2 gap-8 items-start">
@@ -119,9 +116,7 @@ function ReportsSection() {
 							</div>
 						</div>
 						<p className="text-text-sub-light dark:text-text-sub-dark leading-relaxed">
-							Nossa publicação carro-chefe. Receba todo mês uma análise
-							aprofundada dos principais indicadores econômicos (PIB, Inflação,
-							Juros, S&P500) e seus impactos diretos no curto e médio prazo.
+							É a nossa publicação principal. Receba uma análise aprofundada dos principais indicadores econômicos e financeiros do mês(PIB, Inflação, Juros, S&P500) e seus possíveis impactos diretos no curto e médio prazo.
 						</p>
 						<div className="space-y-3">
 							<div className="flex items-center gap-3 text-sm text-text-main-light dark:text-text-main-dark">
@@ -140,7 +135,7 @@ function ReportsSection() {
 								<span className="material-symbols-outlined text-primary text-lg">
 									check_circle
 								</span>
-								<span>Calls de alocação tática</span>
+								<span>Reuniões táticas de finanças para análise de alocação.</span>
 							</div>
 						</div>
 					</div>
@@ -155,11 +150,10 @@ function ReportsSection() {
 								</div>
 								<div>
 									<h4 className="text-lg font-bold text-text-main-light dark:text-white group-hover:text-primary transition-colors">
-										Carta de Inflação
+										Carta do mercado
 									</h4>
 									<p className="text-sm text-text-sub-light dark:text-text-sub-dark mt-2">
-										Monitoramento mensal dos índices de preços com quebras por
-										categorias e previsões de reajustes administrados.
+										Resumo dos acontecimentos mais importantes no mercado financeiro do Brasil, e o impacto causado nos preços dos ativos, com foco em juros, câmbio, ações, commodities e criptomoedas.
 									</p>
 								</div>
 							</div>
@@ -175,8 +169,7 @@ function ReportsSection() {
 										Monitor Global
 									</h4>
 									<p className="text-sm text-text-sub-light dark:text-text-sub-dark mt-2">
-										Análise dos bancos centrais globais (FED, BCE) e impacto nos
-										fluxos de capital para mercados emergentes.
+										Análise dos principais movimentos financeiros globais, com ênfase em EUA e Europa, e o possível impacto nos fluxos de capital para mercados emergentes.
 									</p>
 								</div>
 							</div>
@@ -217,19 +210,16 @@ function TechnologySection() {
 							Consultoria em Política Monetária e Cenários Macroeconômicos
 						</h3>
 						<p className="text-lg text-text-sub-light dark:text-text-sub-dark leading-relaxed">
-							Oferecemos análises de política monetária e cenários
-							macroeconômicos orientados para gestores, fundos e tesourarias
-							institucionais — com foco em riscos, impactos na curva de juros e
-							implicações para alocação de ativos.
+							Oferecemos análises de política monetária e cenários macroeconômicos orientados para clientes em geral, com foco em riscos soberanos, impactos na curva de juros e implicações para alocação de ativos nas mais diversas classes.
 						</p>
 						<ul className="space-y-3 pt-2">
 							<li className="flex items-center gap-3 text-text-main-light dark:text-text-main-dark font-medium">
 								<span className="size-2 rounded-full bg-primary"></span>
-								Avaliação de impactos de decisões de bancos centrais
+								Avaliação de impactos de decisões de bancos centrais – Brasil e EUA
 							</li>
 							<li className="flex items-center gap-3 text-text-main-light dark:text-text-main-dark font-medium">
 								<span className="size-2 rounded-full bg-primary"></span>
-								Simulações de cenários e stress tests macroeconômicos
+								Simulações de cenários macroeconômicos – Base principais indicadores de mercado
 							</li>
 						</ul>
 					</div>
@@ -244,10 +234,7 @@ function TechnologySection() {
 							Curadoria Humana Sênior
 						</h3>
 						<p className="text-lg text-text-sub-light dark:text-text-sub-dark leading-relaxed">
-							Tecnologia é apenas ruído. Nossa equipe é composta por ex-gerentes
-							de bancos centrais e tesoureiros de grandes instituições,
-							garantindo que os dados sejam traduzidos em estratégias
-							acionáveis.
+							Nossa equipe procura trazer a luz dados que sejam traduzidos em estratégias acionáveis, para a necessidade de cada cliente, dentro de seu exclusivo perfil, seja pessoa jurídica ou pessoa física.
 						</p>
 					</div>
 					<div className="rounded-2xl overflow-hidden shadow-xl aspect-video relative group">
