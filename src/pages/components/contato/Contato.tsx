@@ -3,6 +3,9 @@ import { useLocation } from "react-router-dom";
 
 export default function Contato() {
 	const location = useLocation();
+	const EMAIL = import.meta.env.VITE_CONTACT_EMAIL as string;
+	const WHATSAPP = import.meta.env.VITE_CONTACT_WHATSAPP as string;
+
 	const emailFromQuery =
 		new URLSearchParams(location.search).get("email") ?? undefined;
 
@@ -43,9 +46,9 @@ export default function Contato() {
 										</h3>
 										<a
 											className="text-base text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary"
-											href="tel:+5511999998888"
+											href={`tel:+${WHATSAPP}`}
 										>
-											+55 (11) 99999-8888
+											+{WHATSAPP.substring(0, 2)} ({WHATSAPP.substring(2, 4)}) {WHATSAPP.substring(4)}
 										</a>
 									</div>
 								</div>
@@ -61,9 +64,9 @@ export default function Contato() {
 										</h3>
 										<a
 											className="text-base text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary"
-											href="mailto:contato@gioia.com"
+											href={`mailto:${EMAIL}`}
 										>
-											contato@gioia.com
+											{EMAIL}
 										</a>
 									</div>
 								</div>

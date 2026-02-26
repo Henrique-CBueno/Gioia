@@ -5,7 +5,7 @@ export const COMPANY_INFO = {
 };
 
 export const SOCIAL_LINKS = [
-	{ label: "email", href: "#", icon: "alternate_email" },
+	{ label: "email", href: `mailto:${import.meta.env.VITE_CONTACT_EMAIL}`, icon: "alternate_email" },
 	{ label: "share", href: "#", icon: "share" },
 ];
 

@@ -1,4 +1,6 @@
 export default function PoliticaPrivacidade() {
+	const EMAIL = import.meta.env.VITE_CONTACT_EMAIL as string;
+
 	return (
 		<main className="grow">
 			<div className="container mx-auto max-w-4xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
@@ -82,9 +84,9 @@ export default function PoliticaPrivacidade() {
 								pelo e-mail:{" "}
 								<a
 									className="font-medium text-primary hover:underline"
-									href="mailto:privacidade@gioia.com"
+									href={`mailto:${EMAIL}`}
 								>
-									privacidade@gioia.com
+									{EMAIL}
 								</a>
 								.
 							</p>
