@@ -61,3 +61,11 @@ export async function uploadRelatorio(
 	if (!res.ok) throw new Error("Erro ao fazer upload do relatório");
 	return res.json();
 }
+
+export async function excluirRelatorio(id: number): Promise<void> {
+	const res = await fetch(`${BASE_URL}/admin/report/${id}`, {
+		method: "DELETE",
+		headers: authHeaders(),
+	});
+	if (!res.ok) throw new Error("Erro ao excluir relatório");
+}
