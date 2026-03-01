@@ -69,3 +69,32 @@ export async function excluirRelatorio(id: number): Promise<void> {
 	});
 	if (!res.ok) throw new Error("Erro ao excluir relatório");
 }
+
+export async function listarTodosRelatoriosAdmin(mes?: number, ano?: number): Promise<RelatorioDTO[]> {
+	const params = new URLSearchParams();
+	if (mes) params.append("mes", String(mes));
+	if (ano) params.append("ano", String(ano));
+
+	const res = await fetch(`${BASE_URL}/admin/reports?${params}`, {
+		headers: authHeaders(),
+	});
+	if (!res.ok) throw new Error("Erro ao carregar todos os relatórios (admin)");
+	return res.json();
+}
+
+export async function getUsuariosAutorizados(relatorioId: number): Promise<string[]> {
+	const res = await fetch(`${BASE_URL}/admin/reports/${relatorioId}/users`, {
+		headers: authHeaders(),
+	});
+	if (!res.ok) throw new Error("Erro ao carregar usuários com acesso ao relatório");
+	return res.json(); // Espera retornar array de strings (vincular ao id do Keycloak)
+}
+
+export async function atualizarAcessoRelatorio(relatorioId: number, usuarioIds: string[]): Promise<void> {
+	const res = await fetch(`${BASE_URL}/admin/reports/${relatorioId}/users`, {
+		method: "PATCH",
+		headers: authHeaders(),
+		body: JSON.stringify(usuarioIds),
+	});
+	if (!res.ok) throw new Error("Erro ao atualizar acesso do relatório");
+}

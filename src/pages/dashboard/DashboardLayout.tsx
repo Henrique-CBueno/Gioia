@@ -52,6 +52,7 @@ export default function DashboardLayout() {
 		{ to: "/dashboard/relatorios", icon: FileText, label: "Relatórios" },
 		...(isAdmin
 			? [
+					{ to: "/dashboard/admin/relatorios", icon: FileText, label: "Admin. Relatórios" },
 					{ to: "/dashboard/usuarios", icon: Users, label: "Usuários" },
 					{ to: "/dashboard/upload", icon: Upload, label: "Upload" },
 					{ to: "/dashboard/contatos", icon: MessageSquare, label: "Contatos" },

@@ -6,6 +6,7 @@ import EsqueciSenhaPage from "./pages/EsqueciSenhaPage";
 import TrocarSenhaPage from "./pages/TrocarSenhaPage";
 import DashboardLayout from "./pages/dashboard/DashboardLayout";
 import RelatoriosPage from "./pages/dashboard/RelatoriosPage";
+import AdminRelatoriosPage from "./pages/dashboard/AdminRelatoriosPage";
 import UploadRelatorioPage from "./pages/dashboard/UploadRelatorioPage";
 import UsuariosPage from "./pages/dashboard/UsuariosPage";
 import ContatosPage from "./pages/dashboard/ContatosPage";
@@ -31,6 +32,7 @@ function App() {
 					<Route path="/dashboard" element={<DashboardLayout />}>
 						<Route index element={<Navigate to="relatorios" replace />} />
 						<Route path="relatorios" element={<RelatoriosPage />} />
+						<Route path="admin/relatorios" element={<AdminRelatoriosPage />} />
 						<Route path="usuarios" element={<UsuariosPage />} />
 						<Route path="upload" element={<UploadRelatorioPage />} />
 						<Route path="contatos" element={<ContatosPage />} />
