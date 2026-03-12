@@ -15,6 +15,8 @@ export interface UsuarioDTO {
 	firstName: string;
 	lastName: string;
 	enabled: boolean;
+	startContractDate?: string;
+	endContractDate?: string;
 }
 
 export async function listarUsuarios(): Promise<UsuarioDTO[]> {
@@ -46,4 +48,19 @@ export async function redefinirSenhaUsuario(keycloakId: string, senha: string): 
 		body: JSON.stringify({ senha }),
 	});
 	if (!res.ok) throw new Error("Erro ao redefinir senha");
+}
+
+export async function atualizarDatasContratoUsuario(
+	userId: string,
+	dados: {
+		startContractDate: string;
+		endContractDate: string;
+	},
+): Promise<void> {
+	const res = await fetch(`${BASE_URL}/admin/users/${userId}/updateUserContractDate`, {
+		method: "PATCH",
+		headers: authHeaders(),
+		body: JSON.stringify(dados),
+	});
+	if (!res.ok) throw new Error("Erro ao atualizar datas do contrato");
 }
