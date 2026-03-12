@@ -28,6 +28,8 @@ export async function cadastrarUsuario(dados: {
 	sobrenome: string;
 	email: string;
 	senha: string;
+	contractStart: string;
+	contractEnd: string;
 }): Promise<void> {
 	const res = await fetch(`${BASE_URL}/admin/usuarios`, {
 		method: "POST",

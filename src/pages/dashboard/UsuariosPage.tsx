@@ -17,6 +17,8 @@ const schemaCadastro = z.object({
 	sobrenome: z.string().min(1, "Sobrenome obrigatório"),
 	email: z.string().min(1).email("E-mail inválido"),
 	senha: z.string().min(6, "Mínimo 6 caracteres"),
+	contractStart: z.string().min(1, "Data de início obrigatória"),
+	contractEnd: z.string().min(1, "Data de fim obrigatória"),
 });
 
 const schemaSenha = z.object({
@@ -229,6 +231,16 @@ export default function UsuariosPage() {
 							<label className="text-xs font-medium text-gray-600">Senha inicial *</label>
 							<input {...register("senha")} type="password" placeholder="Mínimo 6 caracteres" className={inputClass(!!errors.senha)} />
 							{errors.senha && <p className="text-red-500 text-xs">{errors.senha.message}</p>}
+						</div>
+						<div className="flex flex-col gap-1">
+							<label className="text-xs font-medium text-gray-600">Início do contrato *</label>
+							<input {...register("contractStart")} type="date" className={inputClass(!!errors.contractStart)} />
+							{errors.contractStart && <p className="text-red-500 text-xs">{errors.contractStart.message}</p>}
+						</div>
+						<div className="flex flex-col gap-1">
+							<label className="text-xs font-medium text-gray-600">Fim do contrato *</label>
+							<input {...register("contractEnd")} type="date" className={inputClass(!!errors.contractEnd)} />
+							{errors.contractEnd && <p className="text-red-500 text-xs">{errors.contractEnd.message}</p>}
 						</div>
 					</div>
 
