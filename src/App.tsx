@@ -38,6 +38,7 @@ function App() {
 						<Route path="contatos" element={<ContatosPage />} />
 					</Route>
 				</Route>
+				{/* routes */}
 
 				{/* Site institucional: com Header e Footer */}
 				<Route
